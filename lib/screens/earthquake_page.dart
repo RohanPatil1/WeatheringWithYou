@@ -30,9 +30,19 @@ class _EarthquakesPageState extends State<EarthquakesPage> {
   late List<Model> data;
   late MapShapeSource _mapSource;
   final MapShapeLayerController _layerController = MapShapeLayerController();
+  late MapZoomPanBehavior _zoomPanBehavior;
 
   @override
   void initState() {
+    _zoomPanBehavior = MapZoomPanBehavior(
+      showToolbar: true,
+      toolbarSettings: MapToolbarSettings(
+        position: MapToolbarPosition.topLeft,
+        // iconColor: Colors.red,
+        // itemBackgroundColor: Colors.green,
+        // itemHoverColor: Colors.blue,
+      ),
+    );
     // _mapSource = MapShapeSource.asset(
     //   'assets/australia.json',
     //   shapeDataField: 'STATE_NAME',
@@ -73,6 +83,23 @@ class _EarthquakesPageState extends State<EarthquakesPage> {
                 child: SfMaps(
                   layers: [
                     MapShapeLayer(
+                      // color: Colors.white,
+                      // showDataLabels: true,
+                      // dataLabelSettings: MapDataLabelSettings(
+                      //     textStyle:TextStyle(fontSize: 2.0)
+                      // ),
+                      zoomPanBehavior: _zoomPanBehavior,
+                      onWillZoom: (MapZoomDetails c) {
+                        return true;
+                      },
+                      onWillPan: (MapPanDetails p) {
+                        return true;
+                      },
+                      // strokeColor: Colors.purple,
+                      selectionSettings: const MapSelectionSettings(
+                          color: Colors.yellow,
+                          strokeColor: Colors.red,
+                          strokeWidth: 1.2),
                       controller: _layerController,
                       source: const MapShapeSource.asset(
                         'assets/usa.json',

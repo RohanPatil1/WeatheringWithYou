@@ -1,31 +1,28 @@
 //https://www.weatherapi.com/api-explorer.aspx#forecast
 //dc563094f79548d09fa151653220702
+
 class WeatherForum {
   WeatherForum({
     required this.location,
     required this.current,
     required this.forecast,
-    required this.alerts,
   });
 
   late final Location location;
   late final Current current;
   late final Forecast forecast;
-  late final Alerts alerts;
 
   WeatherForum.fromJson(Map<String, dynamic> json) {
-    location = Location.fromJson(json['location']);
-    current = Current.fromJson(json['current']);
+    // location = Location.fromJson(json['location']);
+    // current = Current.fromJson(json['current']);
     forecast = Forecast.fromJson(json['forecast']);
-    alerts = Alerts.fromJson(json['alerts']);
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['location'] = location.toJson();
-    _data['current'] = current.toJson();
+    // _data['location'] = location.toJson();
+    // _data['current'] = current.toJson();
     _data['forecast'] = forecast.toJson();
-    _data['alerts'] = alerts.toJson();
     return _data;
   }
 }
@@ -41,7 +38,6 @@ class Location {
     required this.localtimeEpoch,
     required this.localtime,
   });
-
   late final String name;
   late final String region;
   late final String country;
@@ -101,17 +97,16 @@ class Current {
     required this.uv,
     required this.gustMph,
     required this.gustKph,
-    required this.airQuality,
   });
 
   late final int lastUpdatedEpoch;
   late final String lastUpdated;
-  late final double tempC;
+  late final int tempC;
   late final double tempF;
   late final int isDay;
   late final Condition condition;
-  late final double windMph;
-  late final double windKph;
+  late final int windMph;
+  late final int windKph;
   late final int windDegree;
   late final String windDir;
   late final int pressureMb;
@@ -127,7 +122,6 @@ class Current {
   late final int uv;
   late final double gustMph;
   late final double gustKph;
-  late final AirQuality airQuality;
 
   Current.fromJson(Map<String, dynamic> json) {
     lastUpdatedEpoch = json['last_updated_epoch'];
@@ -153,7 +147,6 @@ class Current {
     uv = json['uv'];
     gustMph = json['gust_mph'];
     gustKph = json['gust_kph'];
-    airQuality = AirQuality.fromJson(json['air_quality']);
   }
 
   Map<String, dynamic> toJson() {
@@ -181,7 +174,6 @@ class Current {
     _data['uv'] = uv;
     _data['gust_mph'] = gustMph;
     _data['gust_kph'] = gustKph;
-    _data['air_quality'] = airQuality.toJson();
     return _data;
   }
 }
@@ -192,7 +184,6 @@ class Condition {
     required this.icon,
     required this.code,
   });
-
   late final String text;
   late final String icon;
   late final int code;
@@ -208,52 +199,6 @@ class Condition {
     _data['text'] = text;
     _data['icon'] = icon;
     _data['code'] = code;
-    return _data;
-  }
-}
-
-class AirQuality {
-  AirQuality({
-    required this.co,
-    required this.no2,
-    required this.o3,
-    required this.so2,
-    required this.pm2_5,
-    required this.pm10,
-    required this.us_epa_index,
-    required this.gb_defra_index,
-  });
-
-  late final double co;
-  late final double no2;
-  late final double o3;
-  late final double so2;
-  late final double pm2_5;
-  late final double pm10;
-  late final int us_epa_index;
-  late final int gb_defra_index;
-
-  AirQuality.fromJson(Map<String, dynamic> json) {
-    co = json['co'];
-    no2 = json['no2'];
-    o3 = json['o3'];
-    so2 = json['so2'];
-    pm2_5 = json['pm2_5'];
-    pm10 = json['pm10'];
-    us_epa_index = json['us-epa-index'];
-    gb_defra_index = json['gb-defra-index'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['co'] = co;
-    _data['no2'] = no2;
-    _data['o3'] = o3;
-    _data['so2'] = so2;
-    _data['pm2_5'] = pm2_5;
-    _data['pm10'] = pm10;
-    _data['us-epa-index'] = us_epa_index;
-    _data['gb-defra-index'] = gb_defra_index;
     return _data;
   }
 }
@@ -291,14 +236,14 @@ class Forecastday {
   late final int dateEpoch;
   late final Day day;
   late final Astro astro;
-  late final List<Hour> hour;
+  late List<Hour> hour;
 
   Forecastday.fromJson(Map<String, dynamic> json) {
     date = json['date'];
     dateEpoch = json['date_epoch'];
     day = Day.fromJson(json['day']);
     astro = Astro.fromJson(json['astro']);
-    hour = List.from(json['hour']).map((e) => Hour.fromJson(e)).toList();
+    //hour = List.from(json["hour"]).map((e)=>Hour.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -307,7 +252,7 @@ class Forecastday {
     _data['date_epoch'] = dateEpoch;
     _data['day'] = day.toJson();
     _data['astro'] = astro.toJson();
-    _data['hour'] = hour.map((e) => e.toJson()).toList();
+    //  _data['hour'] = hour.map((e)=>e.toJson()).toList();
     return _data;
   }
 }
@@ -336,11 +281,11 @@ class Day {
   });
 
   late final double maxtempC;
-  late final double? maxtempF;
+  late final double maxtempF;
   late final double mintempC;
-  late final double mintempF;
+  late final double? mintempF;
   late final double avgtempC;
-  late final double avgtempF;
+  late final double? avgtempF;
   late final double maxwindMph;
   late final double maxwindKph;
   late final int totalprecipMm;
@@ -364,9 +309,9 @@ class Day {
     avgtempF = json['avgtemp_f'];
     maxwindMph = json['maxwind_mph'];
     maxwindKph = json['maxwind_kph'];
-    totalprecipMm = json['totalprecip_mm'];
-    totalprecipIn = json['totalprecip_in'];
-    avgvisKm = json['avgvis_km'];
+    // totalprecipMm = json['totalprecip_mm'];
+    // totalprecipIn = json['totalprecip_in'];
+    // avgvisKm = json['avgvis_km'];
     avgvisMiles = json['avgvis_miles'];
     avghumidity = json['avghumidity'];
     dailyWillItRain = json['daily_will_it_rain'];
@@ -396,7 +341,7 @@ class Day {
     _data['daily_chance_of_rain'] = dailyChanceOfRain;
     _data['daily_will_it_snow'] = dailyWillItSnow;
     _data['daily_chance_of_snow'] = dailyChanceOfSnow;
-    _data['condition'] = condition.toJson();
+    // _data['condition'] = condition.toJson();
     _data['uv'] = uv;
     return _data;
   }
@@ -411,7 +356,6 @@ class Astro {
     required this.moonPhase,
     required this.moonIllumination,
   });
-
   late final String sunrise;
   late final String sunset;
   late final String moonrise;
@@ -480,7 +424,7 @@ class Hour {
   late final int timeEpoch;
   late final String time;
   late final double? tempC;
-  late final int? tempF;
+  late final double? tempF;
   late final int isDay;
   late final Condition condition;
   late final double? windMph;
@@ -493,12 +437,12 @@ class Hour {
   late final int precipIn;
   late final int humidity;
   late final int cloud;
-  late final double? feelslikeC;
-  late final double? feelslikeF;
+  late final int? feelslikeC;
+  late final int? feelslikeF;
   late final double? windchillC;
-  late final int? windchillF;
-  late final double? heatindexC;
-  late final double? heatindexF;
+  late final double? windchillF;
+  late final int? heatindexC;
+  late final int? heatindexF;
   late final double? dewpointC;
   late final double? dewpointF;
   late final int willItRain;
@@ -508,7 +452,7 @@ class Hour {
   late final int visKm;
   late final int visMiles;
   late final double? gustMph;
-  late final double? gustKph;
+  late final int? gustKph;
   late final int uv;
 
   Hour.fromJson(Map<String, dynamic> json) {
@@ -582,24 +526,6 @@ class Hour {
     _data['gust_mph'] = gustMph;
     _data['gust_kph'] = gustKph;
     _data['uv'] = uv;
-    return _data;
-  }
-}
-
-class Alerts {
-  Alerts({
-    required this.alert,
-  });
-
-  late final List<dynamic> alert;
-
-  Alerts.fromJson(Map<String, dynamic> json) {
-    alert = List.castFrom<dynamic, dynamic>(json['alert']);
-  }
-
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['alert'] = alert;
     return _data;
   }
 }

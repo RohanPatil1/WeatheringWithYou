@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:weathering_you/screens/air_quality_page.dart';
 import 'package:weathering_you/screens/earthquake_page.dart';
+import 'package:weathering_you/screens/forecast_page.dart';
 import 'package:weathering_you/screens/simple_page.dart';
 
 const OPEN_WEATHER_API = "551bceb1825daa3ff74a9f59e7c076b6";
@@ -60,4 +61,9 @@ double getDoubleRandomV() {
   return randomDouble;
 }
 
-List<Widget> pages = [const SimplePage(), AirQualityPage(), EarthquakesPage()];
+List<Widget> pages = const [
+  SimplePage(),
+  AirQualityPage(),
+  EarthquakesPage(),
+  ForecastPage()
+];

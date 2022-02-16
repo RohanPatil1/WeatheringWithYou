@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int currTab = 2;
+  int currTab = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +40,23 @@ class _HomePageState extends State<HomePage> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    //Simple Page
                     Icon(Typicons.cloud_sun,
                         color: (currTab == 0) ? Colors.white : Colors.white60,
                         size: 24.0),
                     const SizedBox(
                       width: 16,
                     ),
+
+                    //Air Quality
                     Icon(Entypo.air,
                         color: (currTab == 1) ? Colors.white : Colors.white60,
                         size: 24.0),
                     const SizedBox(
                       width: 16,
                     ),
+
+                    //EarthQuakes
                     Icon(LineariconsFree.earth,
                         color: (currTab == 2) ? Colors.white : Colors.white60,
                         size: 24.0),

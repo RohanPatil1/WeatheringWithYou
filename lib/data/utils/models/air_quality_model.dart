@@ -21,8 +21,8 @@ components.nh3 Сoncentration of NH3 (Ammonia), μg/m3
 
 import 'package:flutter/cupertino.dart';
 
-class AirQuality {
-  AirQuality({
+class AirQualityData {
+  AirQualityData({
     required this.coord,
     required this.dataList,
   });
@@ -30,7 +30,7 @@ class AirQuality {
   Coord coord = Coord(lon: 0, lat: 0);
   List<DataList> dataList = [];
 
-  AirQuality.fromJson(Map<String, dynamic> json) {
+  AirQualityData.fromJson(Map<String, dynamic> json) {
     // coord = Coord.fromJson(json['coord']);
     debugPrint("FROM JSON");
 

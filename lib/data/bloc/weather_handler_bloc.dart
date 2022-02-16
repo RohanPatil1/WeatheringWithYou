@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:weathering_you/data/utils/models/air_quality_model.dart';
 import 'package:weathering_you/data/utils/models/earthquake_model.dart';
 import 'package:weathering_you/data/utils/models/geocoding_model.dart';
+import 'package:weathering_you/data/utils/models/weather_forum_model.dart';
 import 'package:weathering_you/data/utils/network/call_api.dart';
 
 import '../../constant.dart';
@@ -20,6 +21,24 @@ class WeatherBloc extends ChangeNotifier {
   double currentLat = 51.5072;
   double currentLong = 0.1276;
   late Earthquake earthquakeData;
+  late WeatherForum weatherForumData;
+
+  Future<bool> getForecastInfo(BuildContext context) async {
+    // String apiUrl =
+    //     "http://api.weatherapi.com/v1/forecast.json?key=dc563094f79548d09fa151653220702&q=Mumbai&days=7";
+    //final data = await getCallApi(apiUrl);
+
+    String data =
+        await DefaultAssetBundle.of(context).loadString("assets/forecast.json");
+    final jsonResult = jsonDecode(data); //latest Dart
+    print("Printing Info");
+
+    weatherForumData = WeatherForum.fromJson(jsonResult);
+    print(weatherForumData.forecast.forecastday.length);
+    notifyListeners();
+    // return Earthquake.fromJson(jsonResult);
+    return true;
+  }
 
   Future<Earthquake> fetchEarthQuakeInfo(BuildContext context) async {
     String apiUrl =
@@ -34,18 +53,18 @@ class WeatherBloc extends ChangeNotifier {
     return Earthquake.fromJson(jsonResult);
   }
 
-  Future<AirQuality> fetchAirQualityInfo() async {
+  Future<AirQualityData> fetchAirQualityInfo() async {
     final data = await getCallApi(
         "http://api.openweathermap.org/data/2.5/air_pollution?lat=$currentLat&lon=$currentLong&appid=$OPEN_WEATHER_API");
 
     print("Printing Data");
     // print(data);
 
-    var aq = AirQuality.fromJson(data);
+    var aq = AirQualityData.fromJson(data);
     print("=============");
 
     print(aq.dataList[0].components.nh3);
-    return AirQuality.fromJson(data);
+    return AirQualityData.fromJson(data);
 
     /*
 http://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=50&appid=551bceb1825daa3ff74a9f59e7c076b6

@@ -30,7 +30,7 @@ class _AirQualityPageState extends State<AirQualityPage> {
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
               print("SNAPSHOT HAS DATA");
-              final airData = snapshot.data as AirQuality;
+              final airData = snapshot.data as AirQualityData;
 
               return ListView.builder(
                 itemCount: airData.dataList.length,

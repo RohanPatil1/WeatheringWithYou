@@ -58,7 +58,7 @@ Future<dynamic> getCallApi(String url) async {
     response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       String data = response.body;
-      print(data);
+      // print(data);
       return json.decode(response.body);
     }
   } on HttpException {
