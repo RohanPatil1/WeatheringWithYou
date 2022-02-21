@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:weathering_you/screens/air_quality_page.dart';
 import 'package:weathering_you/screens/earthquake_page.dart';
 import 'package:weathering_you/screens/forecast_page.dart';
+import 'package:weathering_you/screens/news_page.dart';
 import 'package:weathering_you/screens/simple_page.dart';
 
 const OPEN_WEATHER_API = "551bceb1825daa3ff74a9f59e7c076b6";
+const NEWS_API = "3c306b27306041a2a1b8564dd048044c";
 
 final months = [
   "January",
@@ -56,6 +58,16 @@ const Color textDarkGrey = Color(0xff4B4B4B);
 const Color textLightGrey = Color(0xffACA8B5);
 const Color textColor2 = Color(0xff70697B);
 
+const Color colorComb11 = Colors.deepPurple;
+const Color colorComb12 = Colors.greenAccent;
+const Color colorComb13 = Colors.pinkAccent;
+
+const Color colorComb21 = Colors.blue;
+const Color colorComb22 = Colors.deepOrange;
+const Color colorComb23 = Colors.orangeAccent;
+
+const commonTextStyle = TextStyle(color: Colors.white, fontSize: 14.0);
+
 double getDoubleRandomV() {
   double randomDouble = Random().nextDouble();
   return randomDouble;
@@ -65,5 +77,6 @@ List<Widget> pages = const [
   SimplePage(),
   AirQualityPage(),
   EarthquakesPage(),
-  ForecastPage()
+  ForecastPage(),
+  NewsPage(),
 ];

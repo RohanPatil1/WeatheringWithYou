@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:weathering_you/data/utils/models/air_quality_model.dart';
 import 'package:weathering_you/data/utils/models/earthquake_model.dart';
 import 'package:weathering_you/data/utils/models/geocoding_model.dart';
+import 'package:weathering_you/data/utils/models/news_data_model.dart';
 import 'package:weathering_you/data/utils/models/weather_forum_model.dart';
 import 'package:weathering_you/data/utils/network/call_api.dart';
 
@@ -22,11 +23,13 @@ class WeatherBloc extends ChangeNotifier {
   double currentLong = 0.1276;
   late Earthquake earthquakeData;
   late WeatherForum weatherForumData;
+  late NewsData newsData;
 
   Future<bool> getForecastInfo(BuildContext context) async {
+    //API WORKING CHECKED
     // String apiUrl =
     //     "http://api.weatherapi.com/v1/forecast.json?key=dc563094f79548d09fa151653220702&q=Mumbai&days=7";
-    //final data = await getCallApi(apiUrl);
+    // final data = await getCallApi(apiUrl);
 
     String data =
         await DefaultAssetBundle.of(context).loadString("assets/forecast.json");
@@ -51,6 +54,19 @@ class WeatherBloc extends ChangeNotifier {
     earthquakeData = Earthquake.fromJson(jsonResult);
     notifyListeners();
     return Earthquake.fromJson(jsonResult);
+  }
+
+  Future<NewsData> fetchNewsData(BuildContext context) async {
+    String apiUrl =
+        'https://newsapi.org/v2/everything?q=keyword&apiKey=$NEWS_API';
+
+    final data = await getCallApi(apiUrl);
+    // String data =
+    // await DefaultAssetBundle.of(context).loadString("assets/equakes.json");
+    // final jsonResult = jsonDecode(data); //latest Dart
+    newsData = NewsData.fromJson(data);
+    notifyListeners();
+    return newsData;
   }
 
   Future<AirQualityData> fetchAirQualityInfo() async {
@@ -78,8 +94,8 @@ http://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=50&appid=551bceb
     // double longitude = position.longitude;
     // double latitude = position.latitude;
 
-    currentLat = 73.1455749;
-    currentLong = 19.2579931;
+    currentLat = 751.5072;
+    currentLong = 0.1276;
     // print("LONG: $longitude");
     // print("LAT: $latitude");
   }

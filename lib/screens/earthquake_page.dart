@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:glass_kit/glass_kit.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 import 'package:weathering_you/data/bloc/weather_handler_bloc.dart';
 import 'package:weathering_you/data/utils/models/earthquake_model.dart';
@@ -52,7 +53,6 @@ class _EarthquakesPageState extends State<EarthquakesPage> {
     //   shapeColorValueMapper: (int index) => data[index].color,
     // );
     dataEqFuture = WeatherBloc().fetchEarthQuakeInfo(context);
-    setState(() {});
 
 //    features = quakes['features'];
     // TODO: implement initState
@@ -70,98 +70,136 @@ class _EarthquakesPageState extends State<EarthquakesPage> {
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
 
-    return Stack(
-      children: [
-        FutureBuilder(
-          future: dataEqFuture,
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.hasData) {
-              print("SNAPSHOT HAS DATA");
-              final earthQuake = snapshot.data as Earthquake;
-
-              return Center(
-                child: SfMaps(
-                  layers: [
-                    MapShapeLayer(
-                      // color: Colors.white,
-                      // showDataLabels: true,
-                      // dataLabelSettings: MapDataLabelSettings(
-                      //     textStyle:TextStyle(fontSize: 2.0)
-                      // ),
-                      zoomPanBehavior: _zoomPanBehavior,
-                      onWillZoom: (MapZoomDetails c) {
-                        return true;
-                      },
-                      onWillPan: (MapPanDetails p) {
-                        return true;
-                      },
-                      // strokeColor: Colors.purple,
-                      selectionSettings: const MapSelectionSettings(
-                          color: Colors.yellow,
-                          strokeColor: Colors.red,
-                          strokeWidth: 1.2),
-                      controller: _layerController,
-                      source: const MapShapeSource.asset(
-                        'assets/usa.json',
-                        shapeDataField: 'name',
-                      ),
-                      initialMarkersCount: earthQuake.features.length,
-                      markerBuilder: (BuildContext context, int index) {
-                        double lat =
-                            earthQuake.features[index].geometry.coordinates[0];
-                        final long =
-                            earthQuake.features[index].geometry.coordinates[1];
-                        double mag =
-                            earthQuake.features[index].properties.mag ?? 2;
-                        // final d = getDoubleRandomV() + 0.7;
-                        // mag = mag * d;
-                        print("Printing MAG $mag");
-                        return MapMarker(
-                          latitude: lat,
-                          longitude: long,
-                          child: AvatarGlow(
-                              endRadius: mag * 3,
-                              glowColor: Colors.redAccent,
-                              animate: true,
-                              duration: Duration(milliseconds: 2000),
-                              repeat: true,
-                              child: Container(
-                                width: mag,
-                                height: mag,
-                                decoration: const BoxDecoration(
-                                    color: Colors.red, shape: BoxShape.circle),
-                              )),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-
-                // child: ListView.builder(
-                //   itemCount: earthQuake.features.length,
-                //   itemBuilder: (context, index) {
-                //     final a = earthQuake.features[index].properties.place;
-                //     final aCd = earthQuake.features[index].geometry.coordinates;
-                //     return Column(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         Text("$index"),
-                //         Text("PLACE : $a"),
-                //        const SizedBox(height: 16.0,),
-                //         Text("CORD : $aCd"),
-                //       ],
-                //     );
-                //   },
-                // ),
-              );
-            }
-
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
+    return Align(
+      alignment: Alignment.center,
+      child: GlassContainer.clearGlass(
+        height: MediaQuery.of(context).size.height - 100,
+        width: MediaQuery.of(context).size.width - 100,
+        gradient: LinearGradient(
+          colors: [
+            Colors.white.withOpacity(0.40),
+            Colors.white.withOpacity(0.10)
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-      ],
+        borderGradient: LinearGradient(
+          colors: [
+            Colors.white.withOpacity(0.60),
+            Colors.white.withOpacity(0.10),
+            Colors.lightBlueAccent.withOpacity(0.05),
+            Colors.lightBlueAccent.withOpacity(0.6)
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          stops: const [0.0, 0.39, 0.40, 1.0],
+        ),
+        blur: 8.0,
+        borderRadius: BorderRadius.circular(12),
+        borderColor: Colors.white54,
+        borderWidth: 1.5,
+        elevation: 3.0,
+        //isFrostedGlass: true,
+        shadowColor: Colors.black.withOpacity(0.20),
+        alignment: Alignment.center,
+        //   frostedOpacity: 0.12,
+        margin: const EdgeInsets.only(bottom: 100, top: 32),
+        padding: const EdgeInsets.all(8.0),
+        child: Stack(
+          children: [
+            FutureBuilder(
+              future: dataEqFuture,
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                if (snapshot.hasData) {
+                  print("SNAPSHOT HAS DATA");
+                  final earthQuake = snapshot.data as Earthquake;
+
+                  return Center(
+                    child: SfMaps(
+                      layers: [
+                        MapShapeLayer(
+                          // color: Colors.white,
+                          // showDataLabels: true,
+                          // dataLabelSettings: MapDataLabelSettings(
+                          //     textStyle:TextStyle(fontSize: 2.0)
+                          // ),
+                          zoomPanBehavior: _zoomPanBehavior,
+                          onWillZoom: (MapZoomDetails c) {
+                            return true;
+                          },
+                          onWillPan: (MapPanDetails p) {
+                            return true;
+                          },
+                          // strokeColor: Colors.purple,
+                          selectionSettings: const MapSelectionSettings(
+                              color: Colors.yellow,
+                              strokeColor: Colors.red,
+                              strokeWidth: 1.2),
+                          controller: _layerController,
+                          source: const MapShapeSource.asset(
+                            'assets/usa.json',
+                            shapeDataField: 'name',
+                          ),
+                          initialMarkersCount: earthQuake.features.length,
+                          markerBuilder: (BuildContext context, int index) {
+                            double lat = earthQuake
+                                .features[index].geometry.coordinates[0];
+                            final long = earthQuake
+                                .features[index].geometry.coordinates[1];
+                            double mag =
+                                earthQuake.features[index].properties.mag ?? 2;
+                            // final d = getDoubleRandomV() + 0.7;
+                            // mag = mag * d;
+                            print("Printing MAG $mag");
+                            return MapMarker(
+                              latitude: lat,
+                              longitude: long,
+                              child: AvatarGlow(
+                                  endRadius: mag * 3,
+                                  glowColor: Colors.redAccent,
+                                  animate: true,
+                                  duration: Duration(milliseconds: 2000),
+                                  repeat: true,
+                                  child: Container(
+                                    width: mag,
+                                    height: mag,
+                                    decoration: const BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle),
+                                  )),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+
+                    // child: ListView.builder(
+                    //   itemCount: earthQuake.features.length,
+                    //   itemBuilder: (context, index) {
+                    //     final a = earthQuake.features[index].properties.place;
+                    //     final aCd = earthQuake.features[index].geometry.coordinates;
+                    //     return Column(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Text("$index"),
+                    //         Text("PLACE : $a"),
+                    //        const SizedBox(height: 16.0,),
+                    //         Text("CORD : $aCd"),
+                    //       ],
+                    //     );
+                    //   },
+                    // ),
+                  );
+                }
+
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
     );
     // return Scaffold(
     //     appBar: AppBar(

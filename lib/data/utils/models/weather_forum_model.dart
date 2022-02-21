@@ -14,14 +14,14 @@ class WeatherForum {
 
   WeatherForum.fromJson(Map<String, dynamic> json) {
     // location = Location.fromJson(json['location']);
-    // current = Current.fromJson(json['current']);
+    current = Current.fromJson(json['current']);
     forecast = Forecast.fromJson(json['forecast']);
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     // _data['location'] = location.toJson();
-    // _data['current'] = current.toJson();
+    _data['current'] = current.toJson();
     _data['forecast'] = forecast.toJson();
     return _data;
   }
@@ -129,9 +129,9 @@ class Current {
     tempC = json['temp_c'];
     tempF = json['temp_f'];
     isDay = json['is_day'];
-    condition = Condition.fromJson(json['condition']);
-    windMph = json['wind_mph'];
-    windKph = json['wind_kph'];
+    //condition = Condition.fromJson(json['condition']);
+    // windMph = json['wind_mph'];
+    // windKph = json['wind_kph'];
     windDegree = json['wind_degree'];
     windDir = json['wind_dir'];
     pressureMb = json['pressure_mb'];

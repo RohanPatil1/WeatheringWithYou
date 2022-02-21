@@ -19,9 +19,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal,
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            child: Image.asset(
+              "assets/bg.PNG",
+              fit: BoxFit.cover,
+            ),
+          ),
           Container(
             child: pages[currTab],
           ),
@@ -41,37 +49,72 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     //Simple Page
-                    Icon(Typicons.cloud_sun,
-                        color: (currTab == 0) ? Colors.white : Colors.white60,
-                        size: 24.0),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          currTab = 0;
+                        });
+                      },
+                      child: Icon(Typicons.cloud_sun,
+                          color: (currTab == 0) ? Colors.white : Colors.white60,
+                          size: 24.0),
+                    ),
                     const SizedBox(
                       width: 16,
                     ),
 
                     //Air Quality
-                    Icon(Entypo.air,
-                        color: (currTab == 1) ? Colors.white : Colors.white60,
-                        size: 24.0),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          currTab = 1;
+                        });
+                      },
+                      child: Icon(Entypo.air,
+                          color: (currTab == 1) ? Colors.white : Colors.white60,
+                          size: 24.0),
+                    ),
                     const SizedBox(
                       width: 16,
                     ),
 
                     //EarthQuakes
-                    Icon(LineariconsFree.earth,
-                        color: (currTab == 2) ? Colors.white : Colors.white60,
-                        size: 24.0),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          currTab = 2;
+                        });
+                      },
+                      child: Icon(LineariconsFree.earth,
+                          color: (currTab == 2) ? Colors.white : Colors.white60,
+                          size: 24.0),
+                    ),
                     const SizedBox(
                       width: 16,
                     ),
-                    Icon(Icons.timeline,
-                        color: (currTab == 3) ? Colors.white : Colors.white60,
-                        size: 24.0),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          currTab = 3;
+                        });
+                      },
+                      child: Icon(Icons.timeline,
+                          color: (currTab == 3) ? Colors.white : Colors.white60,
+                          size: 24.0),
+                    ),
                     const SizedBox(
                       width: 16,
                     ),
-                    Icon(Typicons.news,
-                        color: (currTab == 4) ? Colors.white : Colors.white60,
-                        size: 24.0),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          currTab = 4;
+                        });
+                      },
+                      child: Icon(Typicons.news,
+                          color: (currTab == 4) ? Colors.white : Colors.white60,
+                          size: 24.0),
+                    ),
                   ],
                 ),
               ),

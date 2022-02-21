@@ -24,7 +24,7 @@ class _SimplePageState extends State<SimplePage> {
     return w;
   }
 
-  Future<Weather> getDataByCurrentLocation() async {
+  Future<Weather> getDataByLatLng() async {
     Weather w = await wf.currentWeatherByLocation(
         WeatherBloc().currentLat, WeatherBloc().currentLong);
 
@@ -36,12 +36,13 @@ class _SimplePageState extends State<SimplePage> {
     // TODO: implement initState
 
     dateString =
-        "${days[d.weekday - 1]} ${d.day.toString()} ${d.year.toString()}";
+        "${days[d.weekday - 1]}, ${d.day.toString()} ${d.year.toString()}";
 
-    WeatherBloc().fetchCurrentLocation().then((value) {
-      dataFuture = getDataByCurrentLocation();
-      setState(() {});
-    });
+    dataFuture = getDataByCity("Mumbai");
+    // WeatherBloc().fetchCurrentLocation().then((value) {
+    //   dataFuture = getDataByLatLng();
+    //   setState(() {});
+    // });
 
     super.initState();
   }
@@ -105,7 +106,7 @@ class _SimplePageState extends State<SimplePage> {
                     Text(
                       "${w.areaName}, ${w.country} ",
                       style:
-                          const TextStyle(fontSize: 64.0, color: Colors.white),
+                          const TextStyle(fontSize: 72.0, color: Colors.white),
                     ),
                     const SizedBox(
                       height: 8.0,
@@ -113,8 +114,8 @@ class _SimplePageState extends State<SimplePage> {
                     Text(
                       dateString,
                       style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.orangeAccent.withOpacity(0.6)),
+                          fontSize: 24.0,
+                          color: Colors.orangeAccent.withOpacity(0.9)),
                     ),
                     const SizedBox(
                       height: 16.0,
@@ -142,8 +143,8 @@ class _SimplePageState extends State<SimplePage> {
                           ),
                           Text(
                             "${w.weatherMain}",
-                            style: GoogleFonts.architectsDaughter(
-                                fontSize: 64.0,
+                            style: GoogleFonts.montserrat(
+                                fontSize: 54.0,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
