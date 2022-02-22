@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'is_connected.dart';
@@ -58,7 +59,7 @@ Future<dynamic> getCallApi(String url) async {
     response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       String data = response.body;
-      // print(data);
+      debugPrint(data);
       return json.decode(response.body);
     }
   } on HttpException {

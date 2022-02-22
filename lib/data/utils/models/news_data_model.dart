@@ -4,7 +4,6 @@ class NewsData {
     required this.totalResults,
     required this.articles,
   });
-
   late final String status;
   late final int totalResults;
   late final List<Articles> articles;
@@ -30,25 +29,25 @@ class Articles {
     required this.source,
     this.author,
     required this.title,
-    required this.description,
+    this.description,
     required this.url,
-    required this.urlToImage,
+    this.urlToImage,
     required this.publishedAt,
-    required this.content,
+    this.content,
   });
 
   late final Source source;
   late final String? author;
   late final String title;
-  late final String description;
+  late final String? description;
   late final String url;
-  late final String urlToImage;
+  late final String? urlToImage;
   late final String publishedAt;
-  late final String content;
+  late final String? content;
 
   Articles.fromJson(Map<String, dynamic> json) {
     source = Source.fromJson(json['source']);
-    author = null;
+    author = json['author'];
     title = json['title'];
     description = json['description'];
     url = json['url'];
@@ -76,7 +75,6 @@ class Source {
     this.id,
     required this.name,
   });
-
   late final String? id;
   late final String name;
 

@@ -19,8 +19,8 @@ class WeatherBloc extends ChangeNotifier {
 
   final TextEditingController searchCtrl = TextEditingController();
   String currLocation = "";
-  double currentLat = 51.5072;
-  double currentLong = 0.1276;
+  double currentLat = 28.6517178;
+  double currentLong = 77.2219388;
   late Earthquake earthquakeData;
   late WeatherForum weatherForumData;
   late NewsData newsData;
@@ -58,13 +58,15 @@ class WeatherBloc extends ChangeNotifier {
 
   Future<NewsData> fetchNewsData(BuildContext context) async {
     String apiUrl =
-        'https://newsapi.org/v2/everything?q=keyword&apiKey=$NEWS_API';
+        'https://newsapi.org/v2/top-headlines?country=in&apiKey=$NEWS_API';
 
-    final data = await getCallApi(apiUrl);
+    // final data = jsonDecode(tempNewsData);
+    // final data = await getCallApi(apiUrl);
+//    print(data);
     // String data =
     // await DefaultAssetBundle.of(context).loadString("assets/equakes.json");
     // final jsonResult = jsonDecode(data); //latest Dart
-    newsData = NewsData.fromJson(data);
+    newsData = NewsData.fromJson(tempNewsData);
     notifyListeners();
     return newsData;
   }
@@ -73,13 +75,16 @@ class WeatherBloc extends ChangeNotifier {
     final data = await getCallApi(
         "http://api.openweathermap.org/data/2.5/air_pollution?lat=$currentLat&lon=$currentLong&appid=$OPEN_WEATHER_API");
 
-    print("Printing Data");
-    // print(data);
+    // const airJsonData = '{"coord":{"lon":0.1276,"lat":51.5072},"list":[{"main":{"aqi":1},"components":{"co":250.34,"no":1.34,"no2":9.08,"o3":76.53,"so2":5.31,"pm2_5":3.23,"pm10":3.87,"nh3":0.81},"dt":1645542000}]}';
+    //
+    // final data =jsonDecode(airJsonData) ;
+    debugPrint("Printing Data");
+    // debugPrint(data);
 
     var aq = AirQualityData.fromJson(data);
     print("=============");
 
-    print(aq.dataList[0].components.nh3);
+    print(aq.list[0].components.nh3);
     return AirQualityData.fromJson(data);
 
     /*
@@ -102,6 +107,7 @@ http://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=50&appid=551bceb
 
   //Get LatLng from City Name using fetchSearchLocation()
   onLocationSearch(String location) {
+    debugPrint("onLocationSearch");
     currLocation = location;
     fetchSearchLocation(currLocation);
 
@@ -109,13 +115,15 @@ http://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=50&appid=551bceb
   }
 
   fetchSearchLocation(String city) async {
+    debugPrint("fetchSearchLocation");
+
     final data = await getCallApi(
         "http://api.openweathermap.org/geo/1.0/direct?q=$city&limit=1&appid=$OPEN_WEATHER_API");
 
-    final geoData = GeocodingData.fromJson(data);
+    final geoData = GeocodingData.fromJson(data[0]);
     currentLong = geoData.lon;
     currentLat = geoData.lat;
-    print("Current LAT LONG : {$currentLat, $currentLong}");
+    debugPrint("Current LAT LONG : {$currentLat, $currentLong}");
     notifyListeners();
   }
 }

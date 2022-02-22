@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int currTab = 3;
+  int currTab = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +33,9 @@ class _HomePageState extends State<HomePage> {
           Container(
             child: pages[currTab],
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
+          Positioned(
+            bottom: 0,
+            left: 0,
             child: Container(
               margin: const EdgeInsets.only(bottom: 24.0),
               padding:
@@ -49,76 +50,172 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     //Simple Page
-                    InkWell(
+                    IconBottom(
                       onTap: () {
                         setState(() {
                           currTab = 0;
                         });
                       },
-                      child: Icon(Typicons.cloud_sun,
-                          color: (currTab == 0) ? Colors.white : Colors.white60,
-                          size: 24.0),
+                      iconData: Typicons.cloud_sun,
+                      title: 'Home',
+                      currTab: currTab,
                     ),
+
+                    // InkWell(
+                    //   onTap: () {
+                    //     setState(() {
+                    //       currTab = 0;
+                    //     });
+                    //   },
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     children: [
+                    //       Icon(Typicons.cloud_sun,
+                    //           color: (currTab == 0) ? Colors.white : Colors
+                    //               .white60,
+                    //           size: 24.0),
+                    //     ],
+                    //   ),
+                    // ),
                     const SizedBox(
                       width: 16,
                     ),
 
                     //Air Quality
-                    InkWell(
+                    IconBottom(
                       onTap: () {
                         setState(() {
                           currTab = 1;
                         });
                       },
-                      child: Icon(Entypo.air,
-                          color: (currTab == 1) ? Colors.white : Colors.white60,
-                          size: 24.0),
+                      iconData: Entypo.air,
+                      title: 'Air\nQuality',
+                      currTab: currTab,
                     ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     setState(() {
+                    //       currTab = 1;
+                    //     });
+                    //   },
+                    //   child: Icon(Entypo.air,
+                    //       color: (currTab == 1) ? Colors.white : Colors.white60,
+                    //       size: 24.0),
+                    // ),
                     const SizedBox(
                       width: 16,
                     ),
 
                     //EarthQuakes
-                    InkWell(
+                    IconBottom(
                       onTap: () {
                         setState(() {
                           currTab = 2;
                         });
                       },
-                      child: Icon(LineariconsFree.earth,
-                          color: (currTab == 2) ? Colors.white : Colors.white60,
-                          size: 24.0),
+                      iconData: LineariconsFree.earth,
+                      title: 'Earthquake\Alerts',
+                      currTab: currTab,
                     ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     setState(() {
+                    //       currTab = 2;
+                    //     });
+                    //   },
+                    //   child: Icon(LineariconsFree.earth,
+                    //       color: (currTab == 2) ? Colors.white : Colors.white60,
+                    //       size: 24.0),
+                    // ),
                     const SizedBox(
                       width: 16,
                     ),
-                    InkWell(
+                    IconBottom(
                       onTap: () {
                         setState(() {
                           currTab = 3;
                         });
                       },
-                      child: Icon(Icons.timeline,
-                          color: (currTab == 3) ? Colors.white : Colors.white60,
-                          size: 24.0),
+                      iconData: Icons.timeline,
+                      title: 'Forecasts',
+                      currTab: currTab,
                     ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     setState(() {
+                    //       currTab = 3;
+                    //     });
+                    //   },
+                    //   child: Icon(Icons.timeline,
+                    //       color: (currTab == 3) ? Colors.white : Colors.white60,
+                    //       size: 24.0),
+                    // ),
                     const SizedBox(
                       width: 16,
                     ),
-                    InkWell(
+                    IconBottom(
                       onTap: () {
                         setState(() {
                           currTab = 4;
                         });
                       },
-                      child: Icon(Typicons.news,
-                          color: (currTab == 4) ? Colors.white : Colors.white60,
-                          size: 24.0),
+                      iconData: Typicons.news,
+                      title: 'News',
+                      currTab: currTab,
                     ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     setState(() {
+                    //       currTab = 4;
+                    //     });
+                    //   },
+                    //   child: Icon(Typicons.news,
+                    //       color: (currTab == 4) ? Colors.white : Colors.white60,
+                    //       size: 24.0),
+                    // ),
                   ],
                 ),
               ),
             ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class IconBottom extends StatelessWidget {
+  final Function onTap;
+  final IconData iconData;
+  final String title;
+  final int currTab;
+
+  const IconBottom(
+      {Key? key,
+      required this.onTap,
+      required this.iconData,
+      required this.title,
+      required this.currTab})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        onTap();
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(iconData,
+              color: (currTab == 0) ? Colors.white : Colors.white60,
+              size: 24.0),
+          Text(
+            title,
+            maxLines: 2,
+            style: TextStyle(
+                fontSize: 12.0,
+                color: (currTab == 0) ? Colors.white : Colors.white60),
           )
         ],
       ),
